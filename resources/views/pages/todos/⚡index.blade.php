@@ -15,7 +15,7 @@ new #[Title('todo一覧')] class extends Component {
     #[Computed]
     public function todos(): Collection
     {
-        return Todos::query()->with('user')->orderBy('due_at')->get();
+        return Todo::query()->with('user')->orderBy('due_at')->get();
     }
 }; ?>
 
@@ -40,7 +40,7 @@ new #[Title('todo一覧')] class extends Component {
             <flux:table.columns>
                 <flux:table.column>イベント</flux:table.column>
                 <flux:table.column>開催日時</flux:table.column>
-                <flux:table.column>会場</flux:table.column>
+                <flux:table.column>カテゴリ</flux:table.column>
                 <flux:table.column>主催</flux:table.column>
                 <flux:table.column></flux:table.column>
             </flux:table.columns>
@@ -48,8 +48,8 @@ new #[Title('todo一覧')] class extends Component {
                 @foreach ($this->todos as $todo)
                     <flux:table.row wire:key="todo-{{ $todo->id }}">
                         <flux:table.cell variant="strong">{{ $todo->title }}</flux:table.cell>
-                        <flux:table.cell>{{ $todo->starts_at->isoFormat('M月D日(ddd) HH:mm') }} 〜 {{ $todo->ends_at->isoFormat('HH:mm') }}</flux:table.cell>
-                        <flux:table.cell>{{ $todo->venue }}</flux:table.cell>
+                        <flux:table.cell>{{ $todo->start_at->isoFormat('M月D日(ddd) HH:mm') }} 〜 {{ $todo->ends_at->isoFormat('HH:mm') }}</flux:table.cell>
+                        <flux:table.cell>{{ $todo->category }}</flux:table.cell>
                         <flux:table.cell>{{ $todo->user->name }}</flux:table.cell>
                         <flux:table.cell>
                             @if ($todo->isOwnedBy(auth()->user()))

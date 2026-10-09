@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
  Route::livewire('/todos', 'pages::todos.index')->name('todos.index');
  
  // ログインが必要なページ
-Route::view('/todos', 'dashboard')->name('todos.index');
 Route::middleware(['auth', 'verified'])->group(function () {
      Route::redirect('dashboard', '/todos')->name('dashboard');
     Route::livewire('/todos/create', 'pages::todos.create')->name('todos.create');
